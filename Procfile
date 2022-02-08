@@ -1,1 +1,1 @@
-web: node .\codevtmp.js
+web: node codevtmp.js
