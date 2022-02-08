@@ -1,4 +1,3 @@
-import _ from 'lodash';
 const mysql = require('mysql');
 const express = require('express');
 const { env } = require('process');
@@ -6,10 +5,8 @@ const app = express()
 
 const host = 'localhost';
 
-let envs;
+let envs = process.env
 
- envs = {};
-_.each(process.env, (value, key) => envs[key] = value);
 
 const port = envs.PORT;
 
