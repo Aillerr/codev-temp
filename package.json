@@ -1,0 +1,27 @@
+{
+  "name": "codevtemp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "codevtmp.js",
+  "dependencies": {
+    "express": "^4.17.2",
+    "mysql": "^2.18.1"
+  },
+  "engines": {
+    "node": "14.x"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Aillerr/codev-temp.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Aillerr/codev-temp/issues"
+  },
+  "homepage": "https://github.com/Aillerr/codev-temp#readme"
+}

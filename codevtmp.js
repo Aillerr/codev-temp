@@ -1,15 +1,26 @@
 const mysql = require('mysql');
-const express = require('express')
+const express = require('express');
+const { env } = require('process');
 const app = express()
 
 const host = 'localhost';
-const port = 8002;
+const port = envs.PORT;
+
+let envs;
+
+if (!('error' in result)) {
+  envs = result.parsed;
+} else {
+  envs = {};
+  _.each(process.env, (value, key) => envs[key] = value);
+}
+
 
 const db = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    database: "codev",
-    password: ""
+    host: envs.DB_HOST,
+    user: envs.DB_USER,
+    database: envs.DB,
+    password: envs.DB_PWD
 });
 
 db.connect(function(err) {
@@ -28,7 +39,7 @@ app.get('/tmp', (req,res) => {
     })
 })
 
-app.get('/tmp/:region', (req,res) => {
+app.get('/tmp/region/:region', (req,res) => {
     const query = "SELECT * FROM temperature WHERE région = ? ";
     db.query(query, [req.params.region], (error, results) => {
         if(!results[0]) {
@@ -38,6 +49,33 @@ app.get('/tmp/:region', (req,res) => {
         }
     })
 })
+
+app.get('/tmp/year/:year', (req,res) => {
+    var dateBeg = req.params.year + "-01-01";
+    var dateEnd = req.params.year + "-12-31";
+    const query = "SELECT * FROM temperature WHERE date BETWEEN '" + dateBeg + "' AND '" + dateEnd + "'";
+    db.query(query, (error, results) => {
+        if(!results[0]) {
+            res.json({status: "Not found!"});
+        }else{
+            res.json(results);
+        }
+    })
+})
+
+app.get('/tmp/yearRegion/:year/:region', (req,res) => {
+    var dateBeg = req.params.year + "-01-01";
+    var dateEnd = req.params.year + "-12-31";
+    const query = "SELECT * FROM temperature WHERE date BETWEEN '" + dateBeg + "' AND '" + dateEnd + "' AND région = ?";
+    db.query(query, [req.params.region], (error, results) => {
+        if(!results[0]) {
+            res.json({status: "Not found!"});
+        }else{
+            res.json(results);
+        }
+    })
+})
+
 
 app.listen(port, () => {
     console.log("Serveur à l'écoute")
