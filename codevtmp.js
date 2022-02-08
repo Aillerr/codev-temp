@@ -4,13 +4,13 @@ const { env } = require('process');
 const app = express()
 
 const host = 'localhost';
-const port = envs.PORT;
 
 let envs;
 
  envs = {};
 _.each(process.env, (value, key) => envs[key] = value);
 
+const port = envs.PORT;
 
 
 const db = mysql.createConnection({
