@@ -8,17 +8,17 @@ const host = 'localhost';
 let envs = process.env
 
 
-const db = mysql.createConnection({
+const db = mysql.createPool({
     host: envs.DB_HOST,
     user: envs.DB_USER,
     database: envs.DB,
     password: envs.DB_PWD
 });
 
-db.connect(function(err) {
+/*db.connect(function(err) {
     if(err) throw err;
     console.log("Connecté à la base de données MySQL!");
-});
+});*/
 
 app.get('/tmp', (req,res) => {
     const query = "SELECT * FROM temperature";
