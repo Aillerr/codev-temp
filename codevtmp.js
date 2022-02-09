@@ -8,9 +8,6 @@ const host = 'localhost';
 let envs = process.env
 
 
-const port = envs.PORT;
-
-
 const db = mysql.createConnection({
     host: envs.DB_HOST,
     user: envs.DB_USER,
@@ -71,7 +68,8 @@ app.get('/tmp/yearRegion/:year/:region', (req,res) => {
     })
 })
 
+app.set('port', (envs.PORT || 5000));
 
-app.listen(port, () => {
+app.listen(app.get('port'), () => {
     console.log("Serveur à l'écoute")
   })
